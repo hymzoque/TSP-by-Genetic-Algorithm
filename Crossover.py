@@ -11,8 +11,8 @@ class Crossover:
     
     # 
     def crossover_insert(self, reciever, insertor):
-        r_re = reciever.road
-        r_in = insertor.road
+        r_re = reciever.path
+        r_in = insertor.path
         length = len(r_re)
         p1 = random.randint(0, length - 1)
         p2 = p1 + 1 if p1 != length - 1 else 0
