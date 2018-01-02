@@ -5,7 +5,7 @@ language: python(without pypy)
   
 benchline: order1 crossover  
 more about order1 crossover, see http://www.rubicite.com/Tutorials/GeneticAlgorithms/CrossoverOperators/Order1CrossoverOperator.aspx  
-
+  
 my method: origin crossover  
 parent1 : 7 1 6 2 12 5 8 11 3 9 4 10  (good performance one)  
 parent2 : 1 2 3 4 5 6 7 8 9 10 11 12  (random one)
@@ -33,3 +33,4 @@ performance:
     benchline:  
         about 10 min time used  
         8466.846934247065 (1 test)  
+
