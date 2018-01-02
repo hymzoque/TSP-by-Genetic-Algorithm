@@ -29,25 +29,51 @@ def GA(dataset=52):
         best_cro[0].printout()
 #        best_cro[0].drawout(points)
     
-def GA_benchline(dataset=52):
+def GA_benchline_1(dataset=52):
     initer = Initer.Initer(dataset)
     points = initer.points
     distances = initer.distances
     e = Evolution.Evolution(distances, points)
     
-    with open("log_benchline_" + str(dataset), "a") as f:
+    with open("log_benchline_1_" + str(dataset), "a") as f:
         # about 60 seconds
         if (dataset == 52):
-            best_benchline = e.evolution_benchline(130, 700, 100000.0, 3000.0, 11, 1, f)
+            best_benchline = e.evolution_benchline_1(130, 700, 100000.0, 3000.0, 11, 1, f)
         # about 10 mins
         elif (dataset == 130):
-            best_benchline = e.evolution_benchline(300, 1500, 100000.0, 3000.0, 11, 1, f)
+            best_benchline = e.evolution_benchline_1(300, 1500, 100000.0, 3000.0, 11, 1, f)
         # parameters have not adjusted
         elif (dataset == 150):
-            best_benchline = e.evolution_benchline(65, 550, 100000.0, 3000.0, 11, 1, f)
+            best_benchline = e.evolution_benchline_1(65, 550, 100000.0, 3000.0, 11, 1, f)
         # parameters have not adjusted
         elif (dataset == 280):
-            best_benchline = e.evolution_benchline(65, 550, 100000.0, 3000.0, 11, 1, f)
+            best_benchline = e.evolution_benchline_1(65, 550, 100000.0, 3000.0, 11, 1, f)
+            
+        best_benchline[0].writein(f)
+        best_benchline[0].printout()
+#        best_benchline[0].drawout(points)
+
+def GA_benchline_2(dataset=52):
+    initer = Initer.Initer(dataset)
+    points = initer.points
+    distances = initer.distances
+    e = Evolution.Evolution(distances, points)
+    
+    with open("log_benchline_2_" + str(dataset), "a") as f:
+        # because of low quality mutation individuals, must raise up the tournament size
+        # to gurantee choosing the good one
+        # about 50 seconds, and bad performance
+        if (dataset == 52):
+            best_benchline = e.evolution_benchline_2(80, 700, 100000.0, 3000.0, 15, 0.1, 1, f)
+        # 
+        elif (dataset == 130):
+            best_benchline = e.evolution_benchline_2(300, 1500, 100000.0, 3000.0, 11, 0.1, 1, f)
+        # parameters have not adjusted
+        elif (dataset == 150):
+            best_benchline = e.evolution_benchline_2(65, 550, 100000.0, 3000.0, 11, 0.1, 1, f)
+        # parameters have not adjusted
+        elif (dataset == 280):
+            best_benchline = e.evolution_benchline_2(65, 550, 100000.0, 3000.0, 11, 0.1, 1, f)
             
         best_benchline[0].writein(f)
         best_benchline[0].printout()
@@ -65,21 +91,34 @@ def test_GA(dataset):
             f.write(str(time))
             f.write("\n\n")
 
-# test benchline for 10 times
-def test_GA_benchline(dataset):
-    open("log_benchline_" + str(dataset), "w").close()
+# test benchline 1 for 10 times
+def test_GA_benchline_1(dataset):
+    open("log_benchline_1_" + str(dataset), "w").close()
     
-    t1 = timeit.Timer("GA_benchline(" + str(dataset) + ")", "from main import GA_benchline")
+    t1 = timeit.Timer("GA_benchline_1(" + str(dataset) + ")", "from main import GA_benchline_1")
     for i in range(5):
         time = t1.timeit(number=1)
-        with open("log_benchline_" + str(dataset), "a") as f:
+        with open("log_benchline_1_" + str(dataset), "a") as f:
             f.write("use time : ")
             f.write(str(time))
             f.write("\n\n")
         
-#GA_benchline(130)
+# test benchline 2 for 10 times
+def test_GA_benchline_2(dataset):
+    open("log_benchline_2_" + str(dataset), "w").close()
+    
+    t1 = timeit.Timer("GA_benchline_2(" + str(dataset) + ")", "from main import GA_benchline_2")
+    for i in range(5):
+        time = t1.timeit(number=1)
+        with open("log_benchline_2_" + str(dataset), "a") as f:
+            f.write("use time : ")
+            f.write(str(time))
+            f.write("\n\n") 
+#GA_benchline_1(130)
+#GA_benchline_2(130)
 #GA(130)
-#test_GA_benchline(130)
+#test_GA_benchline_1(130)
+test_GA_benchline_2(130)
 #test_GA(130)
             
 # =============================================================================
