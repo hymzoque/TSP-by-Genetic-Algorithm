@@ -3,9 +3,8 @@
 import random
 
 class Selection:
-    __DEFAULT_TOURNA_SIZE = 20
     # tournament select
-    def select_tourna(self, gener_set, population, tourna_size=__DEFAULT_TOURNA_SIZE):
+    def select_tourna(self, gener_set, population, tourna_size):
         new_group = []
         for i in range(population):
             sam = random.sample(gener_set, tourna_size)

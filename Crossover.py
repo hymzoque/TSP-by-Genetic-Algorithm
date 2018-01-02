@@ -9,17 +9,44 @@ class Crossover:
         self.__distances = distances
         self.count = 0
     
-    # 
-    def crossover_insert(self, reciever, insertor):
-        r_re = reciever.path
-        r_in = insertor.path
-        length = len(r_re)
+    # benchline
+    # order1 crossover
+    def crossover_benchline(self, reciever, insertor):
+        p_re = reciever.path
+        p_in = insertor.path
+        length = len(p_re)
+        # segmant length
+        seg_len = random.randint(1, length / 2)
+#        seg_len = 5
+        p1 = random.randint(0, length - 1)
+        p2 = p1 + seg_len
+        if (p2 >= length):
+            p2 -= length
+        
+        insection = [p_in[p1]]
+        insection.extend(self.__sub(p_in, p1, p2))
+        insection.append(p_in[p2])
+        temp_reci = self.__minus(p_re, insection)
+        if (p1 > p2):
+            temp_reci.extend(insection)
+            return Gene.Gene(temp_reci, self.__distances)
+        else:
+            newone = temp_reci[:p1]
+            newone.extend(insection)
+            newone.extend(temp_reci[p1:])
+            return Gene.Gene(newone, self.__distances)
+    
+    # good performance crossover
+    def crossover(self, reciever, insertor):
+        p_re = reciever.path
+        p_in = insertor.path
+        length = len(p_re)
         p1 = random.randint(0, length - 1)
         p2 = p1 + 1 if p1 != length - 1 else 0
         
         # p3 front p4 latter
-        p3 = r_in.index(r_re[p1])
-        p4 = r_in.index(r_re[p2])
+        p3 = p_in.index(p_re[p1])
+        p4 = p_in.index(p_re[p2])
         delta = p4 - p3
         if (delta < 0):
             delta = -delta
@@ -35,10 +62,10 @@ class Crossover:
         if (delta > length / 2 - 1):
             delta = length - 2 - delta
             p3, p4 = p4, p3
-        insection = self.__sub(r_in, p3, p4)
-        newone = [r_re[p2]]
-        newone.extend(self.__minus(self.__sub(r_re, p2, p1), insection))
-        newone.append(r_re[p1])
+        insection = self.__sub(p_in, p3, p4)
+        newone = [p_re[p2]]
+        newone.extend(self.__minus(self.__sub(p_re, p2, p1), insection))
+        newone.append(p_re[p1])
         newone.extend(insection)
         
         return Gene.Gene(newone, self.__distances)
@@ -50,7 +77,7 @@ class Crossover:
     # a != b
     def __sub(self, l, a, b):
         length = len(l)
-        if (a >= length | b >= length):
+        if (a >= length | b >= length | a < 0 | b < 0):
             return
         sub = []
         count = a + 1 if a != length - 1 else 0
