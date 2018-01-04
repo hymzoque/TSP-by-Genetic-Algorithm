@@ -36,7 +36,7 @@ performance:
 
     main method:  
         about 90 seconds time used  
-        7601.660212972372 best result(in 10 test) (global best 6110.86094968039)  
+        7032.670706163489 best result(in 10 test) (global best 6110.86094968039)  
     benchline 1:  
         about 10 mins time used  
         8466.846934247065 (1 test)  
